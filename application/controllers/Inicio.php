@@ -65,7 +65,8 @@ class Inicio extends CI_Controller
         
         $this->session->sess_destroy();
         $_SESSION['usuario'] = null;
-        $_SESSION['environment'] == null;
+        $_SESSION['environment'] = null;
+        $_SESSION['rol'] = null;
         redirect('login');
     }
 

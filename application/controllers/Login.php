@@ -13,7 +13,7 @@ class Login extends CI_Controller
         $this->CI =& get_instance();
         $this->load->library('session');
         $this->load->model('Usuarios_model');
-        $this->load->model('LoginUserLog_model');
+        
         $this->load->helper('url_helper');
         $this->load->helper('date');
         $this->load->helper('hashedPassword_helper');
@@ -57,7 +57,8 @@ class Login extends CI_Controller
                         $this->session->userdata('username'); 
                         $_SESSION['usuario'] = $usuario;
                         $_SESSION['environment'] = ENVIRONMENT;
-                        $this->session->set_flashdata('welcomeSesion', 'Bienvenido '.$user->nombre); 
+                        $_SESSION['rol'] = $user->id_rol;
+                        
                         redirect('inicio/');
                     
                  

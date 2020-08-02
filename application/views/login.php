@@ -47,9 +47,9 @@
   <div class="login-logo">
   	<div class="image">
           <img src="<?php echo base_url();
-          ?>theme/dist/img/logo_pnc_alter.png" width="200" height="200" class="img-fluid img-circle elevation" alt="User Image">
+          ?>theme/dist/img/logo.jpg" width="200" height="200" class="img-fluid img-circle elevation" alt="User Image">
     </div>
-    <a href="/TRANSITO">TRANSITO</a>
+    <a href="/TRANSITO">LOGIN</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -100,9 +100,7 @@
       </form>
       <!-- /.social-auth-links -->
 	  <br>
-      <p class="mb-2">
-        <a href="#">He olvidado mi contraseña</a>
-      </p>
+      
     </div>
     <!-- /.login-card-body -->
 

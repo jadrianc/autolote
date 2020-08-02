@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title><?php echo $title; ?></title>
   <link rel="shortcut icon" type="image/png" href="<?php echo base_url();
-         ?>theme/dist/img/logo_pnc_alter.png"/>
+         ?>theme/dist/img/logo.jpg"/>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -119,14 +119,7 @@
   
   <script src="<?php echo base_url();?>theme/plugins/jquery.maskedinput-master/src/jquery.maskedinput.js"></script>
   <script src="<?php echo base_url();?>theme/plugins/icheck-bootstrap/icheck.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWlw231bgP1i-WAh-3QJlQBgC62LLlvc8"></script>
+  
 
   
 
@@ -161,10 +154,10 @@
     <a href="<?php echo base_url();
          ?>inicio" class="brand-link">
       <img src="<?php echo base_url();
-         ?>theme/dist/img/logo_pnc.png"
+         ?>theme/dist/img/logo.jpg"
            alt="PNC Logo"
            class="brand-image img-circle elevation">
-      <span class="brand-text font-weight-light">TRANSITO</span>
+      <span class="brand-text font-weight-light">IMPORT <b>CARS</b></span>
     </a>
 
     <!-- Sidebar -->
@@ -186,188 +179,45 @@
           <li class="nav-item">
               <a id="li-permiso" href="<?php echo base_url();
               ?>permisoConducir" class="nav-link">
-              <i class="nav-icon fas fa-user-shield"></i>
+              <i class="nav-icon fas fa-car"></i>
               <p>
-                Permisos Conducir
+                Vehiculos
               </p>
             </a>
           </li>
           <li class="nav-item">
               <a id="li-permiso" href="<?php echo base_url();
               ?>Esquelas" class="nav-link">
-              <i class="nav-icon far fa-id-card"></i>
+              <i class="nav-icon fas fa-street-view"></i>
               <p>
-                Esquelas
+                Clientes
               </p>
             </a>
           </li>
           <li class="nav-item">
               <a id="li-permiso" href="<?php echo base_url();
               ?>Inspecciones" class="nav-link">
-              <i class="nav-icon fas fa-check"></i>
+              <i class="nav-icon fas fa-search"></i>
               <p>
-                Inspecciones
+                Consultas
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a id="li-permiso" href="<?php echo base_url();
+              ?>Inspecciones" class="nav-link">
+              <i class="nav-icon fas fa-calendar-check"></i>
+              <p>
+                Asignaciones
               </p>
             </a>
           </li>
           
           <?php } ?> 
 
-          <li id="li-op-activos" class="nav-item has-treeview">
-            <a id="li-activos" href="#" class="nav-link">
-              <i class="nav-icon fas fa-file-alt"></i>
-              <p>
-                Talonarios
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-              <ul class="nav nav-treeview">  
-              <?php if(true){  ?>
-                <li class="nav-item">
-                    <a id="li-permiso" href="<?php echo base_url();
-                    ?>AutTalonarios" class="nav-link">
-                    <i class="nav-icon fas fa-user-check"></i>
-                    <p>
-                      Autorizacion Talonarios
-                    </p>
-                  </a>
-                </li>
-
-                <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>AsignacionTalonarios" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
-              <p>
-                Asignacion de Talonarios
-              </p>
-            </a>
-          </li>
-              <?php } ?>
-          <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>reasignacionTalonarios" class="nav-link">
-              <i class="nav-icon fas fa-people-carry"></i>
-              <p>
-                Reasignacion Talonarios
-              </p>
-            </a>
-          </li>
-              </ul>
-            
-          </li>
+          
           <?php if(true){  ?>
-          <li id="li-op-activos" class="nav-item has-treeview">
-            <a id="li-activos" href="#" class="nav-link">
-              <i class="nav-icon fas fa-traffic-light"></i>
-              <p>
-                Catálogo de Transito
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-              <ul class="nav nav-treeview">        
-                  <li class="nav-item">
-                    <a id="li-marca" href="<?php echo base_url();
-                      ?>unidadesTransito" class="nav-link">
-                      <i class="nav-icon far fa-circle"></i>
-                      <p>
-                        Unidades
-                      </p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a id="li-clase" href="<?php echo base_url();
-                    ?>claseVehiculo" class="nav-link">
-                      <i class="nav-icon far fa-circle"></i>
-                      <p>
-                        Clase Vehiculo
-                      </p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                      <a id="li-subclase" href="<?php echo base_url();
-                      ?>faltasTransito" class="nav-link">
-                      <i class="nav-icon far fa-circle"></i>
-                      <p>
-                        Faltas
-                      </p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a id="li-tiposadquisicion" href="<?php echo base_url();
-                      ?>planesTransito" class="nav-link">
-                      <i class="nav-icon far fa-circle"></i>
-                      <p>
-                        Planes
-                      </p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a id="li-acta" href="<?php echo base_url();
-                      ?>TipoPlacas" class="nav-link">
-                      <i class="nav-icon far fa-circle"></i>
-                      <p>
-                        Tipo Placas
-                      </p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a id="li-estado" href="<?php echo base_url();
-                      ?>TipoLicencia" class="nav-link">
-                      <i class="nav-icon far fa-circle"></i>
-                      <p>
-                        Tipo de Licencia
-                      </p>
-                    </a>
-                  </li>
-
-                  
-                  
-            </ul>
-
-            <li id="li-op-activos" class="nav-item has-treeview">
-            <a id="li-activos" href="#" class="nav-link">
-              <i class="nav-icon fas fa-file-pdf"></i>
-              <p>
-                Reportes
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-              <ul class="nav nav-treeview">  
-              <?php if($allOptions === "validacion1"){  ?>
-                <li class="nav-item">
-                    <a id="li-permiso" href="<?php echo base_url();
-                    ?>GeneradorReporte" class="nav-link">
-                    <i class="nav-icon fas fa-circle"></i>
-                    <p>
-                      Generador de Reportes
-                    </p>
-                  </a>
-                </li>
-
-                <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>Bitacora" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
-              <p>
-                Bitacora
-              </p>
-            </a>
-          </li>
-              <?php } ?>
-          <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>ReportePlanes" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
-              <p>
-                Planes
-              </p>
-            </a>
-          </li>
-              </ul>
-            
-          </li>
-            
-          </li>
+          
           
           <li class="nav-header">ADMINISTRACIÓN</li>
           <li class="nav-item">

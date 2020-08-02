@@ -198,40 +198,8 @@
           }
       });
 
-      $("#searchONI").click(function(){
-        if($("#oni").val()!=""){ 
-          $.ajax({ 
-                url: "personal/getNombreById",
-                data : "oni="+$("#oni").val(),
-                type: "POST",
-                dataType: 'json',
-                success: function (res) {
-                  if(res.success){
-                      $("#responsable").val(res.data[0].nombre);
-                  } else {
-                      $("#responsable").val('');
-                  }
-                },
-                error: function (data) {
-                  Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'No se pudo completar su peticion!',
-                    footer: ''
-                  })
-                  console.log('Error:', data);
-                }
-          });
-        } else { 
-          $("#responsable").val('');
-          Swal.fire({
-            type: 'info',
-            title: 'ONI Vacio',
-            text: 'Por favor ingrese un numero de ONI para realizar su busqueda',
-            footer: ''
-          })
-        }
-      });
+      
+        
 
     $('#usuario_list tbody').on('click', '.btn-edit', function () {
         var data = table.row( $(this).parents('tr') ).data();
@@ -402,7 +370,7 @@
     });
 
     function setNullSelect2(){
-        $('#id_ccostos').val(null).trigger('change');
+       
         $('#id_rol').val(null).trigger('change');
       }
 
@@ -427,15 +395,14 @@
     }
 
     $('#create-new').click(function () {
-         $('#ipShow').hide();
-         $('#oni').prop('disabled', false);
-         $('#pass').prop('disabled', false);
+        
+         
          $('#btn-save').val("create");
          $('#usuarioForm').trigger("reset");
          $('#formModal').html("Agregar Nuevo Usuario");
          $('#ajax-modal').modal('show');
          setNullSelect2();
-         $('#estado').prop('disabled', true);
+         
       });
 
     if ($("#usuarioForm").length > 0) {
@@ -444,7 +411,7 @@
           rules: {
             nombre: {required: true, maxlength: 10,},
             pass: {required: true, maxlength: 90 },
-            oni: {required: true, maxlength: 20 },
+            codigoUsuario: {required: true, maxlength: 20 },
             id_rol: { required: true },
             id_ccostos: {required: true },
             ip: { maxlength: 24  }
@@ -452,7 +419,7 @@
           messages: {
             nombre: { required: "Ingrese el nombre del Usuario",  maxlength: jQuery.validator.format("Por favor, no ingrese mas de {0} caracteres")},
             pass: { required: "Ingrese el password del Usuario", maxlength: jQuery.validator.format("Por favor, no ingrese mas de {0} caracteres")},
-            oni: { required: "Ingrese el ONI del Usuario", maxlength: jQuery.validator.format("Por favor, no ingrese mas de {0} caracteres")},
+            codigoUsuario: { required: "Ingrese el codigo del Usuario", maxlength: jQuery.validator.format("Por favor, no ingrese mas de {0} caracteres")},
             id_rol: {required: "Seleccione el rol del usuario"},
             id_ccostos: {required: "Seleccione el centro de costos asignado al usuario"},
             ip: { maxlength: jQuery.validator.format("Por favor, no ingrese mas de {0} caracteres") },
