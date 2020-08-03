@@ -186,8 +186,8 @@
             </a>
           </li>
           <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>Esquelas" class="nav-link">
+              <a id="li-clientes" href="<?php echo base_url();
+              ?>Clientes" class="nav-link">
               <i class="nav-icon fas fa-street-view"></i>
               <p>
                 Clientes

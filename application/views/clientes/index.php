@@ -33,9 +33,12 @@
           <table id="usuario_list" class="table table-bordered table-hover table-sm" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Codigo</th>
-                        <th>Usuario</th>
-                        <th>Rol</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Telefono</th>
+                        <th>DUI</th>
+                        <th>Direccion</th>
+                        <th>Correo</th>
                         
                         <th style="width: 20%">Opciones</th>
                     </tr>
@@ -61,26 +64,26 @@
                         <div class="col-sm-4">
                           <!-- text input -->
                           <div class="form-group">
-                            <label>Usuario</label>
-                            <input type="text" class="form-control text-uppercase" placeholder="nombre de usuario"  
-                             id="nombre" name="nombre" maxlength="10" required>
+                            <label>Nombre</label>
+                            <input type="text" class="form-control text-uppercase" placeholder="nombre de cliente"  
+                             id="nombre" name="nombre" required>
                           </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control text-uppercase" placeholder="password de usuario"
-                                id="pass" name="pass" maxlength="90" required>
+                                <label>Apellidos</label>
+                                <input type="text" class="form-control text-uppercase" placeholder="Apellidos Cliente"
+                                id="apellido" name="apellido" maxlength="90" required>
                             </div>
                          </div>
                         <div class="col-sm-4">
                             <!-- text input -->
                             <div class="form-group">
-                              <label>Codigo Usuario</label>
+                              <label>Telefono</label>
                                 <div class="input-group mb-3">
                                     <!-- /btn-group -->
-                                    <input type="text" class="form-control text-uppercase" id="codigoUsuario" 
-                                    name="codigoUsuario" placeholder="Codigo del Usuario" maxlength="20" required>
+                                    <input type="text" class="form-control text-uppercase" id="telefono" 
+                                    name="telefono" placeholder="Telefono del cliente" required>
                                     
                                 </div>
                             </div>
@@ -88,13 +91,29 @@
                       </div>
                       
                       <div class="row" >
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
-                                <label>Rol de Usuario</label>
-                                <select class="form-control select2 select2-info" name="id_rol" id="id_rol" 
-                                data-dropdown-css-class="select2-info" style="width: 100%;" required> </select>
+                                <label>Dui</label>
+                                <input type="text" class="form-control text-uppercase" id="dui" 
+                                    name="dui" placeholder="DUI" required>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <input type="email" class="form-control" id="correo" 
+                                    name="correo" placeholder="Correo del cliente" required>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Direccion</label>
+                                    <input type="text" class="form-control text-uppercase" id="direccion" 
+                                        name="direccion" placeholder="Direccion del cliente" required>
+                                </div>
+                            </div>
                       </div>
                   </div>
                   <div class="modal-footer">
@@ -116,11 +135,45 @@
  <script>
 
   $(document).ready(function() {
-    $('#li-usuario').removeClass('nav-link').addClass('nav-link active');
-  
-    $("#id_rol").change(function(){
-        $(this).valid(); 
-      });
+    $('#li-clientes').removeClass('nav-link').addClass('nav-link active');
+   
+
+    $('#dui').on('keydown', function (event) {
+        if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 13 || event.keyCode == 37 || event
+            .keyCode == 39) {} else {
+            if ((event.keyCode > 47 && event.keyCode < 60) || (event.keyCode > 95 && event.keyCode < 106)) {
+                inputval = $(this).val();
+                var string = inputval.replace(/[^0-9]/g, "");
+                var bloc1 = string.substring(0, 8);
+                var bloc2 = string.substring(8, 8);
+                var string = bloc1 + "-" + bloc2;
+                $(this).val(string);
+            } else {
+                event.preventDefault();
+            }
+
+        }
+    });
+
+    $('#telefono').on('keydown', function (event) {
+        if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 13 || event.keyCode == 37 || event
+            .keyCode == 39) {} else {
+            if ((event.keyCode > 47 && event.keyCode < 60) || (event.keyCode > 95 && event.keyCode < 106)) {
+                inputval = $(this).val();
+                var string = inputval.replace(/[^0-9]/g, "");
+                var bloc1 = string.substring(0, 4);
+                var bloc2 = string.substring(4, 7);
+                var string = bloc1 + "-" + bloc2;
+                $(this).val(string);
+            } else {
+                event.preventDefault();
+            }
+
+        }
+    });
+
+
+   
 
     let USER = '';
     var table = $('#usuario_list').DataTable({
@@ -145,18 +198,21 @@
               }
           },
         "ajax": {
-            "url": "usuarios/getAll",
+            "url": "clientes/getAll",
             "type": "GET",
             
         },
         "columns": [
-            { "data": "codigo" },
-            { "data": "nombre" },
-            { "data": "nombre_rol" }
+            { "data": "nombres" },
+            { "data": "apellidos" },
+            { "data": "dui" },
+            { "data": "telefono" },
+            { "data": "direccion" },
+            { "data": "correo" }
             
         ],
         "columnDefs": [ {
-            "targets": 3,
+            "targets": 6,
             "data": null,
             "class": "project-actions text-center",
             "defaultContent": "<button class='btn btn-info btn-sm btn-edit'><i class='fas fa-pen'></i> </button> &nbsp; <button class='btn btn-danger btn-sm btn-delete'><i class='fas fa-trash'></i> </button> &nbsp; "
@@ -191,7 +247,7 @@
         var data = table.row( $(this).parents('tr') ).data();
         console.log(data)
           $.ajax({ 
-                url: "usuarios/getById/"+data['id_usuario'],
+                url: "clientes/getById/"+data['id_cliente'],
                 type: "GET",
                 dataType: 'json',
                 success: function (res) {
@@ -226,7 +282,7 @@
     $('#usuario_list tbody').on('click', '.btn-delete', function () {
         var data = table.row( $(this).parents('tr') ).data();
           Swal.fire({
-          title: 'Esta seguro de borrar el dato: '+ data['nombre'] + '?',
+          title: 'Esta seguro de borrar al usuario: '+ data['nombres'] + '?',
           text: "Este proceso es irreversible!",
           type: 'warning',
           showCancelButton: true,
@@ -237,7 +293,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({ 
-                url: "usuarios/delete/"+data['id_usuario'],
+                url: "clientes/delete/"+data['id_cliente'],
                 type: "GET",
                 dataType: 'json',
                 success: function (res) {
@@ -269,21 +325,13 @@
 
     function setForm(data){
      
-     
-      USER = data['id_usuario'];
-      $('#nombre').val(data['nombre']);
-      $('#pass').val(data['pass']);
-      $('#codigoUsuario').val(data['codigo']);
-        var cRolSelect = $('#id_rol');
-            var option = new Option(data['id_rol']+ ' - ' + data['nombre_rol'], data['id_rol'], true, true);
-            cRolSelect.append(option).trigger('change');
-
-            cRolSelect.trigger({
-                  type: 'select2:select',
-                  params: {
-                      data: data
-                  }
-              });
+      USER = data['id_cliente'];
+      $('#nombre').val(data['nombres']);
+      $('#apellido').val(data['apellidos']);
+      $('#dui').val(data['dui']);
+      $('#telefono').val(data['telefono']);
+      $('#direccion').val(data['direccion']);
+      $('#correo').val(data['correo']);
               
     }
 
@@ -292,7 +340,7 @@
          
          $('#btn-save').val("create");
          $('#usuarioForm').trigger("reset");
-         $('#formModal').html("Agregar Nuevo Usuario");
+         $('#formModal').html("Agregar Nuevo Cliente");
          $('#ajax-modal').modal('show');
          setNullSelect2();
          
@@ -302,8 +350,8 @@
 
         $("#usuarioForm").validate({
           rules: {
-            nombre: {required: true, maxlength: 10,},
-            pass: {required: true, maxlength: 90 },
+            nombre: {required: true, maxlength: 60,},
+            apellido: {required: true, maxlength: 60 },
             codigoUsuario: {required: true, maxlength: 20 },
             id_rol: { required: true },
             id_ccostos: {required: true },
@@ -342,11 +390,11 @@
             var dataRequest = '';
 
             if(actionType == 'create'){
-              urlRequest = 'usuarios/store';
+              urlRequest = 'Clientes/store';
               dataRequest = $('#usuarioForm').serialize();
             } else if(actionType == 'update') {
-              urlRequest = 'usuarios/update';
-              dataRequest = $('#usuarioForm').serialize() + '&id_usuario=' + USER
+              urlRequest = 'clientes/update';
+              dataRequest = $('#usuarioForm').serialize() + '&id_cliente=' + USER
             }
 
             $('#btn-save').prop('disabled',true);
@@ -371,16 +419,7 @@
                     $('#btn-save').html('Guardar');
                     $('#btn-save').prop('disabled', false);
 
-                 } else if(res.status == 'duplicate'){
-                    Swal.fire({
-                      type: 'info',
-                      title: 'Duplicado',
-                      text: 'Estimado usuario, el registro que intenta ingresra ya existe.',
-                      footer: ''
-                    })
-                    $('#btn-save').html('Guardar');
-                    $('#btn-save').prop('disabled', false);
-                 } else {
+                 }  else {
                     Swal.fire({
                       type: 'warning',
                       title: 'Hubo un problema',

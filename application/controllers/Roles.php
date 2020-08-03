@@ -13,15 +13,10 @@ class Roles extends CI_Controller
         $this->username = $_SESSION['usuario'];
         $this->load->model('Roles_model');
         $this->load->helper('url_helper');
-        $this->load->model('Auditoria_model');
         $this->load->helper('date');
         $this->load->library('form_validation');
         $this->form_validation->set_message('required', '%s es obligatorio.');
         $this->form_validation->set_message('numeric', '%s debe ser numerico.');
-        $this->load->library('authorization_token');
-        $this->load->library('timejwt_library');
-        $this->load->library('audit_library');
-        $this->load->library('validateuser_library');
         $this->tableName = 'TTO_T_ROLES';
     }
 
@@ -113,18 +108,7 @@ class Roles extends CI_Controller
                         $status = true;
                         $newRecord = $this->Roles_model->getByRolName($newRecord['NOMBRE_ROL']);
 
-                        $this->Auditoria_model->create(
-                            $this->audit_library->auditArray(
-                                $this->tableName,
-                                $newRecord->ID_ROL,
-                                'CREAR',
-                                $this->username,
-                                'TODOS',
-                                'NO APLICA',
-                                'NO APLICA',
-                                $this->input->ip_address()
-                            )
-                        );
+                        
                     } else {
                         $status = 'duplicate';
                     }
@@ -200,18 +184,7 @@ class Roles extends CI_Controller
        if (!empty($is_valid_token) and $is_valid_token['status'] === true && $this->validateuser_library->isAdminUser($is_valid_token['data']->user_name)){
             $data = $this->Roles_model->getById($id);
             if ($data) {
-                $this->Auditoria_model->create(
-                    $this->audit_library->auditArray(
-                        $this->tableName,
-                        $id,
-                        'BORRAR',
-                        $this->username,
-                        "TODOS",
-                        "NO APLICA",
-                        "NO APLICA",
-                        $this->input->ip_address()
-                    )
-                );
+                
                 $this->Roles_model->delete($id);
                 echo json_encode(array("status" => true));
             } else {
@@ -224,17 +197,6 @@ class Roles extends CI_Controller
     }
 
     private function auditoria($id,$operacion,$campo,$vAntiguo,$vNuevo){
-        $this->Auditoria_model->create(
-            $this->audit_library->auditArray(
-                $this->tableName,
-                $id,
-                $operacion,
-                $this->username,
-                $campo,
-                $vAntiguo,
-                $vNuevo,
-                $this->input->ip_address()
-            )
-        );
+        
     }
 }
