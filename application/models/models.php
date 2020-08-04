@@ -8,16 +8,30 @@ class models extends CI_Model
         $this->load->database();
     }
 
-    public function getSelect2($searchTerm = ""){
+    public function getSelect2Marca($searchTerm = ""){
         $this->db->select('*');
-        $this->db->where("NOMBRE_USUARIO like '%".$searchTerm."%' ");
-        $this->db->or_where("ID_USUARIO like '%".$searchTerm."%' ");
-        $fetched_records = $this->db->get($this->tableName);
+        $this->db->where("marca like '%".$searchTerm."%' ");
+        $this->db->or_where("id_marca like '%".$searchTerm."%' ");
+        $fetched_records = $this->db->get("marcas");
         $records = $fetched_records->result_array();
 
         $data = array();
         foreach($records as $record){
-           $data[] = array("id"=>$record['ID_USUARIO'], "text"=>$record['ID_USUARIO'].' - '.$record['NOMBRE_USUARIO']);
+           $data[] = array("id"=>$record['id_marca'], "text"=>$record['id_marca'].' - '.$record['marca']);
+        }
+        return $data;
+    }
+
+    public function getSelect2Modelo($searchTerm = ""){
+        $this->db->select('*');
+        $this->db->where("modelo like '%".$searchTerm."%' ");
+        $this->db->or_where("id_modelo like '%".$searchTerm."%' ");
+        $fetched_records = $this->db->get("modelos");
+        $records = $fetched_records->result_array();
+
+        $data = array();
+        foreach($records as $record){
+           $data[] = array("id"=>$record['id_modelo'], "text"=>$record['id_modelo'].' - '.$record['modelo']);
         }
         return $data;
     }
@@ -35,6 +49,17 @@ class models extends CI_Model
         $this->db->select('*');
         $this->db->from($tableName);
         $this->db->where($primaryKey, $id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function getVehById($id)
+    {
+        $this->db->select('vehiculos.*, marcas.marca as marcaV, modelos.modelo as modeloV');
+        $this->db->from('vehiculos');
+        $this->db->join('modelos', 'modelos.id_modelo = vehiculos.id_modelo', 'inner');
+        $this->db->join('marcas', 'marcas.id_marca = vehiculos.id_marca', 'inner');
+        $this->db->where('id_vehiculo', $id);
         $query = $this->db->get();
         return $query->row();
     }
@@ -83,5 +108,14 @@ class models extends CI_Model
         $this->db->where("CODPER", $oni);
         $query = $this->db->get();  
         return $query->row();
+    }
+
+    public function getAllVehiculos($tableName){
+        $this->db->select('vehiculos.*, marcas.marca as marcaV, modelos.modelo as modeloV');
+        $this->db->from('vehiculos');
+        $this->db->join('modelos', 'modelos.id_modelo = vehiculos.id_modelo', 'inner');
+        $this->db->join('marcas', 'marcas.id_marca = vehiculos.id_marca', 'inner');
+        $query = $this->db->get();
+        return $query->result();
     }
 }

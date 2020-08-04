@@ -11,7 +11,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url();?>theme/plugins/fontawesome-free/css/all.min.css">
@@ -43,12 +43,8 @@
 
   <!-- Bootstrap4 Duallistbox --> 
   <link rel="stylesheet" href="<?php echo base_url();?>theme/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-<!-- include VueJS first -->
-<script src="https://unpkg.com/vue@latest"></script>
 
-<!-- use the latest vue-select release -->
-<script src="https://unpkg.com/vue-select@latest"></script>
-<link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
+
   
   <!-- Scripts -->
   
@@ -115,10 +111,12 @@
   <script src="<?php echo base_url();?>theme/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 
   <script src="<?php echo base_url();?>theme/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-  <script src="<?php echo base_url();?>theme/plugins/webcamJs/webcam.min.js"></script>
   
   <script src="<?php echo base_url();?>theme/plugins/jquery.maskedinput-master/src/jquery.maskedinput.js"></script>
   <script src="<?php echo base_url();?>theme/plugins/icheck-bootstrap/icheck.min.js"></script>
+
+  <link rel="stylesheet" href="<?php echo base_url();?>theme/plugins/fine-uploader/fine-uploader-new.min.css">
+  <script src="<?php echo base_url();?>theme/plugins/fine-uploader/jquery.fine-uploader.js"></script>
   
 
   
@@ -177,8 +175,8 @@
           <li class="nav-header">MODULO</li>
           <?php if(true){  ?>
           <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>permisoConducir" class="nav-link">
+              <a id="li-vehiculo" href="<?php echo base_url();
+              ?>Vehiculo" class="nav-link">
               <i class="nav-icon fas fa-car"></i>
               <p>
                 Vehiculos
@@ -209,6 +207,15 @@
               <i class="nav-icon fas fa-calendar-check"></i>
               <p>
                 Asignaciones
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a id="li-cli" href="<?php echo base_url();
+              ?>pageClient" class="nav-link">
+              <i class="nav-icon fas fa-globe"></i>
+              <p>
+                Pagina Cliente
               </p>
             </a>
           </li>
