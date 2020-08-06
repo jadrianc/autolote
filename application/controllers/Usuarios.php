@@ -34,17 +34,13 @@ class Usuarios extends CI_Controller
         
     }
 
-    public function getSelect2()
+    public function getSelectVendedores()
     {
-        $is_valid_token = $this->authorization_token->validateToken();
-       if (!empty($is_valid_token) and $is_valid_token['status'] === true){
+       
             $searchTerm = strtoupper($this->input->post('searchTerm'));
             $response = $this->Usuarios_model->getSelect2($searchTerm);
             echo json_encode($response);
-        } else {
-            $this->output->set_header('HTTP/1.0 401 UNAUTHORIZED');
-            echo json_encode(array("status" => 401, 'data' => 'UNAUTHORIZED'));
-        }
+      
     }
 
     public function getAll()

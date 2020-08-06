@@ -118,4 +118,16 @@ class models extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function getAllSolicitudes(){
+
+        $this->db->select("solicitudes.*, vehiculos.*, marcas.marca, modelos.modelo, solicitudes.estado as estadoSolicitud");
+        $this->db->from("solicitudes");
+        $this->db->join("vehiculos", "solicitudes.id_vehiculo = vehiculos.id_vehiculo", "inner");
+        $this->db->join("marcas", "marcas.id_marca = vehiculos.id_marca", "inner");
+        $this->db->join("modelos", "modelos.id_modelo = vehiculos.id_modelo", "inner");
+        $query = $this->db->get();
+        return $query->result();
+
+    }
 }

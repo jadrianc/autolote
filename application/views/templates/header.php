@@ -201,12 +201,22 @@
               </p>
             </a>
           </li>
+          
           <li class="nav-item">
-              <a id="li-permiso" href="<?php echo base_url();
-              ?>Inspecciones" class="nav-link">
+              <a id="li-asignaciones" href="<?php echo base_url();
+              ?>asignaciones" class="nav-link">
               <i class="nav-icon fas fa-calendar-check"></i>
               <p>
                 Asignaciones
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a id="li-venta" href="<?php echo base_url();
+              ?>venta" class="nav-link">
+              <i class="nav-icon fas fa-calendar-check"></i>
+              <p>
+                Venta
               </p>
             </a>
           </li>
@@ -227,7 +237,7 @@
           
           
           <li class="nav-header">ADMINISTRACIÓN</li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
               <a id="li-rol" href="<?php echo base_url();
               ?>roles" class="nav-link">
               <i class="nav-icon fas fa-user-shield"></i>
@@ -235,7 +245,7 @@
                 Roles de Usuario
               </p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
               <a id="li-usuario" href="<?php echo base_url();
               ?>usuarios" class="nav-link">

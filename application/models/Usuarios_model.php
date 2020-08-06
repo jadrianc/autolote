@@ -15,16 +15,27 @@ class Usuarios_model extends CI_Model
 
     public function getSelect2($searchTerm = ""){
         $this->db->select('*');
-        $this->db->where("NOMBRE_USUARIO like '%".$searchTerm."%' ");
-        $this->db->or_where("ID_USUARIO like '%".$searchTerm."%' ");
+        $this->db->where("id_rol", 2);
+        $this->db->or_where("nombre like '%".$searchTerm."%' ");
+        $this->db->or_where("id_usuario like '%".$searchTerm."%' ");
         $fetched_records = $this->db->get($this->tableName);
         $records = $fetched_records->result_array();
-
+        $newRecords = $this->removeElementWithValue($records, 'id_rol', 1);
         $data = array();
-        foreach($records as $record){
-           $data[] = array("id"=>$record['ID_USUARIO'], "text"=>$record['ID_USUARIO'].' - '.$record['NOMBRE_USUARIO']);
+        foreach($newRecords as $record){
+           $data[] = array("id"=>$record['id_usuario'], "text"=>$record['id_usuario'].' - '.$record['nombre']);
         }
         return $data;
+    }
+
+    private function removeElementWithValue($array, $key, $value)
+    {
+        foreach ($array as $subKey => $subArray) {
+            if ($subArray[$key] == $value) {
+                unset($array[$subKey]);
+            }
+        }
+        return $array;
     }
 
     public function getAll()

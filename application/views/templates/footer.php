@@ -3,7 +3,7 @@
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Desarrollado por &copy; 2019-2020 <a href="javascript:;">DATUM REDSOFT</a>.</strong>
+    <strong>Desarrollado por &copy; 2020 <a href="javascript:;"></a>.</strong>
   </footer>
 
   <!-- Control Sidebar -->
