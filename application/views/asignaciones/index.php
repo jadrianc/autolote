@@ -171,9 +171,39 @@
             "targets": 9,
             "data": null,
             "class": "project-actions text-center",
-            "defaultContent": "<button class='btn btn-warning btn-sm btn-edit'><i class='fas fa-user-check'></i> </button> &nbsp; <button class='btn btn-info btn-sm btn-delete'><i class='fas fa-eye'></i> </button> &nbsp; "
+            "defaultContent": " <button id='editarAsignacion' class='btn btn-success btn-sm btn-editar'><i class='far fa-edit'></i> </button> &nbsp; <button id='asignacionB' class='btn btn-warning btn-sm btn-edit'><i class='fas fa-user-check'></i> </button> &nbsp;  <button class='btn btn-info btn-sm btn-delete'><i class='fas fa-eye'></i> </button> &nbsp; "
         } ]
     });
+
+
+    table.on( 'draw', function () {
+            $('#usuario_list tr').each(function() { 
+
+
+               var estado = $(this).find("td:nth-child(9)").html();
+               console.log(estado)
+              
+              var asignar = $(this).find('#asignacionB');
+              var editar = $(this).find('#editarAsignacion');
+             
+
+              
+              if(estado === 'Asignado'){
+                asignar.attr('disabled','disabled');
+              }
+
+               if(estado === 'Pendiente'){
+                editar.attr('disabled','disabled');
+               }
+
+              // if(estado == "DESCARGADO"){
+              //   buttonRevertir.attr('disabled','disabled');
+              //   buttonReasinar.attr('disabled','disabled');
+              // }
+              
+             
+              });
+          } );
 
 
       $("#id_rol").select2({
@@ -199,18 +229,54 @@
       
         
 
-    $('#usuario_list tbody').on('click', '.btn-edit', function () {
+      $('#usuario_list tbody').on('click', '.btn-editar', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        console.log(data)
+        //console.log(data)
+          $.ajax({ 
+                url: "asignaciones/getById/"+data['id_solicitud'],
+                type: "GET",
+                dataType: 'json',
+                success: function (res) {
+                  console.log(res)
+                  if(res.success){
+                    $('#usuarioForm').trigger("reset");
+                    $('#formModal').html("Editar Asignacion");
+                    $('#btn-save').val("update");
+                    setFormAs(res.data);
+                    $('#ajax-modal').modal('show');
+                  } else {
+                    Swal.fire({
+                    type: 'warning',
+                    title: 'Error...',
+                    text: 'No se encontrol el recurso seleccionado',
+                    footer: ''
+                  })
+                  }
+                },
+                error: function (data) {
+                  Swal.fire({
+                    type: 'error',
+                    title: 'Error...',
+                    text: 'No se pudo completar su peticion!',
+                    footer: ''
+                  })
+                  console.log('Error:', data);
+                }
+          });
+    });
+
+    // $('#usuario_list tbody').on('click', '.btn-editar', function () {
+    //     var data = table.row( $(this).parents('tr') ).data();
+    //     console.log(data)
           
-        // $('#usuarioForm').trigger("reset");
-        // $('#formModal').html("Editar Usuario");
-        // $('#btn-save').val("update");
-        setForm(data);
-        $('#ajax-modal').modal('show');
+    //     // $('#usuarioForm').trigger("reset");
+    //     // $('#formModal').html("Editar Usuario");
+    //     // $('#btn-save').val("update");
+    //     setForm(data);
+    //     $('#ajax-modal').modal('show');
                   
          
-    });
+    // });
 
 
     $('#usuario_list tbody').on('click', '.btn-delete', function () {
@@ -273,6 +339,21 @@
               
     }
 
+   
+    function setFormAs(data){
+      ASIGNACION = data["id_asignacion"]
+      var cRolSelect = $('#vendedor');
+            var option = new Option(data['id_usuario']+ ' - ' + data['nombre'], data['id_usuario'], true, true);
+            cRolSelect.append(option).trigger('change');
+
+            cRolSelect.trigger({
+                  type: 'select2:select',
+                  params: {
+                      data: data
+                  }
+              });
+    }
+
     $('#create-new').click(function () {
         
          
@@ -331,8 +412,9 @@
               urlRequest = 'asignaciones/store';
               dataRequest = $('#usuarioForm').serialize() + '&id_vehiculo=' + VEHICULO + '&id_solicitud=' + SOLICITUD
             } else if(actionType == 'update') {
-              urlRequest = 'clientes/update';
-              dataRequest = $('#usuarioForm').serialize() + '&id_vehiculo=' + VEHICULO
+          
+              urlRequest = 'asignaciones/update';
+              dataRequest = $('#usuarioForm').serialize() + '&id_asignacion=' + ASIGNACION
             }
 
             $('#btn-save').prop('disabled',true);
@@ -351,12 +433,12 @@
                       text: 'Su registro ha sido guardado',
                       footer: ''
                     })
-                    table.ajax.reload();
+                    
                     $('#usuarioForm').trigger("reset");
                     $('#ajax-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     $('#btn-save').prop('disabled', false);
-
+                    table.ajax.reload();
                  }  else {
                     Swal.fire({
                       type: 'warning',

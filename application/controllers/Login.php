@@ -16,15 +16,8 @@ class Login extends CI_Controller
         
         $this->load->helper('url_helper');
         $this->load->helper('date');
-        $this->load->helper('hashedPassword_helper');
-        $this->load->helper('getIP_helper');
         $this->load->library('form_validation');
-        $this->load->library('authorization_token');
-        $this->load->library('validateuser_library');
-        $this->load->library('audit_library');
-        $this->form_validation->set_message('required', '%s es obligatorio.');
-        $this->form_validation->set_message('numeric', '%s debe ser numerico.');
-        $this->form_validation->set_message('max_length', '%s excede el numero de caracteres permitidos.');
+     
     }
 
     public function index()
@@ -65,11 +58,17 @@ class Login extends CI_Controller
 
                 } else {
                     $data = array(
-                        'error_message' => validation_errors(),
-                        'reseteo' => FALSE
+                        'error_message' => "Usuario o Contraseña Invalida",
+                        'user' => FALSE
                     );
                     $this->load->view('login', $data);
                 }
+            }else{
+                $data = array(
+                    'error_message' => "Usuario o Contraseña Invalida",
+                    'user' => FALSE
+                );
+                $this->load->view('login', $data);
             }    
         }
 

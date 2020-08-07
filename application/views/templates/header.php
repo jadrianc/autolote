@@ -214,7 +214,7 @@
           <li class="nav-item">
               <a id="li-venta" href="<?php echo base_url();
               ?>venta" class="nav-link">
-              <i class="nav-icon fas fa-calendar-check"></i>
+              <i class="nav-icon fas fa-cash-register"></i>
               <p>
                 Venta
               </p>

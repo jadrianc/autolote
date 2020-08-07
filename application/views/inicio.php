@@ -194,7 +194,7 @@
       <div class="col-md-6"> 
           <div class="card">
               <div class="card-header border-transparent">
-                <h3 class="card-title">Sistema TRANSITO</h3>
+                <h3 class="card-title">Sistema MA Export</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">

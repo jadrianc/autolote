@@ -130,4 +130,15 @@ class models extends CI_Model
         return $query->result();
 
     }
+
+    public function getVendedor($id){
+        $this->db->select("asignacion.*, usuarios.*");
+        $this->db->from("asignacion");
+        $this->db->join("usuarios", "usuarios.id_usuario = asignacion.id_usuario");
+        $this->db->where("id_solicitud", $id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+
 }

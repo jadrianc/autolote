@@ -84,4 +84,39 @@ class Asignaciones extends CI_Controller
             echo json_encode(array("status" => $status , 'data' => $newRecord));
     }
 
+    public function getById($id)
+    {
+        
+            $data = $this->models->getVendedor($id);
+            $arr = array('success' => false, 'data' => '');
+            if ($data) {
+                $arr = array('success' => true, 'data' => $data);
+            }
+            echo json_encode($arr);
+       
+    }
+
+    public function update(){
+        $status = false;
+        $id_asignacion = xss_clean(strtoupper($this->input->post('id_asignacion')));
+        $id_vendedor = xss_clean(strtoupper($this->input->post('vendedor')));
+
+        $data = array(
+            "id_asignacion" => $id_asignacion,
+            "id_usuario" => $id_vendedor
+        );
+
+        $this->form_validation->set_rules('id_asignacion', 'id_asignacion', 'trim|required|max_length[10]');
+        $this->form_validation->set_rules('vendedor', 'vendedor', 'trim|required|max_length[10]');
+
+        if ($this->form_validation->run() == true) {
+                        
+            $this->models->update($data, "asignacion", "id_asignacion");
+            $status = true;
+                
+                 
+        }
+    echo json_encode(array("status" => $status , 'data' => $data));
+    }
+
 }

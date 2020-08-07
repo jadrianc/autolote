@@ -7,23 +7,6 @@ class Audit_Library
         $this->CI =& get_instance();
     }
 
-    public function auditArray($tabla, $filaid, $operacion, $usuario, $campo, $valorAntiguo, $valorNuevo, $ipOrigen)
-    {
-        $data = array(
-            'TABLA' => $tabla,
-            'FILAID' => $filaid,
-            'OPERACION' => $operacion,
-            'FECHAHORA' => date('d-M-y h:i:s A'),
-            'USUARIO' => $usuario,
-            'CAMPO' => $campo,
-            'VALORANTIGUO' => $valorAntiguo,
-            'VALORNUEVO' => $valorNuevo,
-            'IPORIGEN' => $ipOrigen,
-            'APP' => 'TRANSITO'
-        );
-
-        return $data;
-    }
 
     public function diffInData($oldRecords, $newRecords)
     {

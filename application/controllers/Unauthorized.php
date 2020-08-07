@@ -12,7 +12,7 @@ class Unauthorized extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'TRANSITO | 401 No Autorizado'; // Capitalize the first letter
+        $data['title'] = 'Export | 401 No Autorizado'; // Capitalize the first letter
         $this->load->helper('url');
         $this->load->view('unauthorized', $data);
         $this->load->view('templates/footer', $data);

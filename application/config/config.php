@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 #configuracion en servidor
-#$config['base_url'] = 'http://192.168.108.52/TRANSITO/';
+
 
 #configuracion local
 $config['base_url'] = 'http://localhost/autos/';

@@ -49,7 +49,7 @@
           <img src="<?php echo base_url();
           ?>theme/dist/img/logo.jpg" width="200" height="200" class="img-fluid img-circle elevation" alt="User Image">
     </div>
-    <a href="/TRANSITO">LOGIN</a>
+    <a href="/MA Export">LOGIN</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -65,7 +65,6 @@
       <?php
       }
 
-      if (isset($reseteo) and !$reseteo){
       ?>
 
 
@@ -104,57 +103,7 @@
     </div>
     <!-- /.login-card-body -->
 
-      <?php }  
-      
-      else { ?>
-        <div class="alert alert-warning alert-dismissible">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h5><i class="icon fas fa-ban"></i> Notificacion</h5>
-           Estimado usuario :  <?php echo '<b>'.$user.'</b>'.'. Por favor digite un nuevo password'; ?> 
-      </div>
-          <form action="<?php echo base_url();
-            ?>login/resetPassword" autocomplete="off" id="loginForm" method="POST">
-
-            <input type="hidden" name="token"  value="<?php echo $token ?>">
-            <div class="input-group mb-3">
-            <input type="text" class="form-control" id="user" name="user" value="<?php echo $user; ?>" placeholder="Usuario" maxlength="50" 
-              readonly>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="90" 
-              required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock	"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar Password" maxlength="90" 
-              required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
-                </div>
-              </div>
-        </div>
-        <div class="row">
-              <!-- /.col -->
-              <div class="col-12">
-                <input type="submit" id="btn-login" class="btn btn-primary btn-block btn-flat" value="Cambiar Password">
-              </div>
-              <!-- /.col -->
-            </div>
-          </form>
-          <!-- /.social-auth-links -->
-        </div>
-        <!-- /.login-card-body -->
-      <?php } ?>
+  
   </div>
 </div>
 <!-- /.login-box -->
