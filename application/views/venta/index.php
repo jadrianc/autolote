@@ -23,25 +23,23 @@
       <!-- Default box -->
       <div class="card card-gray-dark">
         <div class="card-header">
-          <h3 class="card-title">Listado de Solicitudes</h3>
+          <h3 class="card-title">Listado de Asignaciones</h3>
 
           <div class="card-tools">
-              
+              <a href="javascript:void(0)" class="btn btn-primary ml-3" id="create-new"><i class="fas fa-plus"></i> Agregar nuevo/a</a>
           </div>
         </div>
         <div class="card-body">
           <table id="usuario_list" class="table table-bordered table-hover table-sm" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Correlativo</th>
                         <th>Nombres</th>
                         <th>Apellidos</th>
                         <th>Telefono</th>
+                        <th>DUI</th>
+                        <th>Direccion</th>
                         <th>Correo</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Fecha y hora</th>
-                        <th>Estado</th>
+                        
                         <th style="width: 20%">Opciones</th>
                     </tr>
                 </thead>
@@ -62,30 +60,61 @@
                   <div class="modal-body">
                     <form id="usuarioForm" autocomplete="off" name="usuarioForm" class="form-horizontal">
                       
-                      <div class="card">
-                          <div class="card-header" class="bg-primary color-palette">
-                                <h5>Asignar Solicitud de Compra</h5>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <!-- text input -->
+                          <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control text-uppercase" placeholder="nombre de cliente"  
+                             id="nombre" name="nombre" required>
                           </div>
-                          <div class="card-body">
-                            <div class="alert alert-info alert-dismissible">
-                                    
-                                    <h5 ><i class="icon fas fa-car"></i> <span id="marca"></span></h5>
-                                    <h6>Cliente: <span id="nombre"></span></h6>
-                                    <h6></h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <input type="text" class="form-control text-uppercase" placeholder="Apellidos Cliente"
+                                id="apellido" name="apellido" maxlength="90" required>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Vendedor</label>
-                                        <select class="form-control select2 select2-info" name="vendedor" id="vendedor" 
-                                        data-dropdown-css-class="select2-info" style="width: 100%;" required> </select>
-                                    </div>
+                         </div>
+                        <div class="col-sm-4">
+                            <!-- text input -->
+                            <div class="form-group">
+                              <label>Telefono</label>
+                                <div class="input-group mb-3">
+                                    <!-- /btn-group -->
+                                    <input type="text" class="form-control text-uppercase" id="telefono" 
+                                    name="telefono" placeholder="Telefono del cliente" required>
+                                    
                                 </div>
                             </div>
-                          </div>
+                        </div>
                       </div>
                       
-                     
+                      <div class="row" >
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Dui</label>
+                                <input type="text" class="form-control text-uppercase" id="dui" 
+                                    name="dui" placeholder="DUI" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <input type="email" class="form-control" id="correo" 
+                                    name="correo" placeholder="Correo del cliente" required>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Direccion</label>
+                                    <input type="text" class="form-control text-uppercase" id="direccion" 
+                                        name="direccion" placeholder="Direccion del cliente" required>
+                                </div>
+                            </div>
+                      </div>
                   </div>
                   <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-save" value="create">Guardar</button>
@@ -106,27 +135,8 @@
  <script>
 
   $(document).ready(function() {
-    $('#li-asignaciones').removeClass('nav-link').addClass('nav-link active');
-
-    $("#vendedor").select2({
-          placeholder: "Seleccione Vendedor a Asignar",
-          ajax: { 
-            url: 'usuarios/getSelectVendedores',
-            type: "post",
-            dataType: 'json',
-            delay: 150,
-            data: function (params) {
-                return {
-                  searchTerm: params.term
-                };
-            },
-            processResults: function (response) {
-                return {
-                  results: response
-                };
-            }
-          }
-      });   
+    $('#li-venta').removeClass('nav-link').addClass('nav-link active');
+   
 
     let USER = '';
     var table = $('#usuario_list').DataTable({
@@ -151,59 +161,26 @@
               }
           },
         "ajax": {
-            "url": "asignaciones/getAllSolicitudes",
+            "url": "clientes/getAll",
             "type": "GET",
             
         },
         "columns": [
-            { "data": "id_solicitud" },
-            { "data": "nombre" },
-            { "data": "apellido" },
+            { "data": "nombres" },
+            { "data": "apellidos" },
+            { "data": "dui" },
             { "data": "telefono" },
-            { "data": "correo" },
-            { "data": "marca" },
-            { "data": "modelo" },
-            { "data": "fecha" },
-            { "data": "estadoSolicitud" }
+            { "data": "direccion" },
+            { "data": "correo" }
             
         ],
         "columnDefs": [ {
-            "targets": 9,
+            "targets": 6,
             "data": null,
             "class": "project-actions text-center",
-            "defaultContent": " <button id='editarAsignacion' class='btn btn-success btn-sm btn-editar'><i class='far fa-edit'></i> </button> &nbsp; <button id='asignacionB' class='btn btn-warning btn-sm btn-edit'><i class='fas fa-user-check'></i> </button> &nbsp;  <button class='btn btn-info btn-sm btn-open'><i class='fas fa-eye'></i> </button> &nbsp; "
+            "defaultContent": "<button class='btn btn-info btn-sm btn-edit'><i class='fas fa-pen'></i> </button> &nbsp; <button class='btn btn-danger btn-sm btn-delete'><i class='fas fa-trash'></i> </button> &nbsp; "
         } ]
     });
-
-
-    table.on( 'draw', function () {
-            $('#usuario_list tr').each(function() { 
-
-
-               var estado = $(this).find("td:nth-child(9)").html();
-               console.log(estado)
-              
-              var asignar = $(this).find('#asignacionB');
-              var editar = $(this).find('#editarAsignacion');
-             
-
-              
-              if(estado === 'Asignado'){
-                asignar.attr('disabled','disabled');
-              }
-
-               if(estado === 'Pendiente'){
-                editar.attr('disabled','disabled');
-               }
-
-              // if(estado == "DESCARGADO"){
-              //   buttonRevertir.attr('disabled','disabled');
-              //   buttonReasinar.attr('disabled','disabled');
-              // }
-              
-             
-              });
-          } );
 
 
       $("#id_rol").select2({
@@ -229,20 +206,19 @@
       
         
 
-      $('#usuario_list tbody').on('click', '.btn-editar', function () {
+    $('#usuario_list tbody').on('click', '.btn-edit', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        //console.log(data)
+        console.log(data)
           $.ajax({ 
-                url: "asignaciones/getById/"+data['id_solicitud'],
+                url: "clientes/getById/"+data['id_cliente'],
                 type: "GET",
                 dataType: 'json',
                 success: function (res) {
-                  console.log(res)
                   if(res.success){
                     $('#usuarioForm').trigger("reset");
-                    $('#formModal').html("Editar Asignacion");
+                    $('#formModal').html("Editar Usuario");
                     $('#btn-save').val("update");
-                    setFormAs(res.data);
+                    setForm(res.data);
                     $('#ajax-modal').modal('show');
                   } else {
                     Swal.fire({
@@ -264,17 +240,6 @@
                 }
           });
     });
-
-
-
-     $('#usuario_list tbody').on('click', '.btn-open', function () {
-         var data = table.row( $(this).parents('tr') ).data();
-         console.log(data)
-          
-         
-                  
-         
-     });
 
 
     $('#usuario_list tbody').on('click', '.btn-delete', function () {
@@ -322,34 +287,15 @@
       }
 
     function setForm(data){
-
-        console.log(data)
-     $("#marca").html(data.marca)
-     $("#nombre").html(data.nombre + " " + data.apellido)
-     VEHICULO = data['id_vehiculo'];
-     SOLICITUD = data['id_solicitud'];
-    //   $('#nombre').val(data['nombres']);
-    //   $('#apellido').val(data['apellidos']);
-    //   $('#dui').val(data['dui']);
-    //   $('#telefono').val(data['telefono']);
-    //   $('#direccion').val(data['direccion']);
-    //   $('#correo').val(data['correo']);
+     
+      USER = data['id_cliente'];
+      $('#nombre').val(data['nombres']);
+      $('#apellido').val(data['apellidos']);
+      $('#dui').val(data['dui']);
+      $('#telefono').val(data['telefono']);
+      $('#direccion').val(data['direccion']);
+      $('#correo').val(data['correo']);
               
-    }
-
-   
-    function setFormAs(data){
-      ASIGNACION = data["id_asignacion"]
-      var cRolSelect = $('#vendedor');
-            var option = new Option(data['id_usuario']+ ' - ' + data['nombre'], data['id_usuario'], true, true);
-            cRolSelect.append(option).trigger('change');
-
-            cRolSelect.trigger({
-                  type: 'select2:select',
-                  params: {
-                      data: data
-                  }
-              });
     }
 
     $('#create-new').click(function () {
@@ -407,12 +353,11 @@
             var dataRequest = '';
 
             if(actionType == 'create'){
-              urlRequest = 'asignaciones/store';
-              dataRequest = $('#usuarioForm').serialize() + '&id_vehiculo=' + VEHICULO + '&id_solicitud=' + SOLICITUD
+              urlRequest = 'Clientes/store';
+              dataRequest = $('#usuarioForm').serialize();
             } else if(actionType == 'update') {
-          
-              urlRequest = 'asignaciones/update';
-              dataRequest = $('#usuarioForm').serialize() + '&id_asignacion=' + ASIGNACION
+              urlRequest = 'clientes/update';
+              dataRequest = $('#usuarioForm').serialize() + '&id_cliente=' + USER
             }
 
             $('#btn-save').prop('disabled',true);
@@ -431,12 +376,12 @@
                       text: 'Su registro ha sido guardado',
                       footer: ''
                     })
-                    
+                    table.ajax.reload();
                     $('#usuarioForm').trigger("reset");
                     $('#ajax-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     $('#btn-save').prop('disabled', false);
-                    table.ajax.reload();
+
                  }  else {
                     Swal.fire({
                       type: 'warning',

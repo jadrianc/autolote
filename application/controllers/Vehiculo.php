@@ -195,50 +195,9 @@ class Vehiculo extends CI_Controller
             $telefono = xss_clean($this->input->post('telefono'));
             $direccion = xss_clean($this->input->post('direccion'));
             $observaciones = xss_clean($this->input->post('observaciones'));
-            //print_r($_FILES);
-            if(isset($_FILES['pro_images'])){
-
+            $estado = xss_clean($this->input->post('estadoV'));
             
-            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-            $nomDirectorio = substr(str_shuffle($permitted_chars), 0, 10);
-            $index = 0;
-            $dirs = [];
-            $directorios = [];
-            foreach($_FILES["pro-image"]['tmp_name'] as $key => $tmp_name)
-                {
-                    //Validamos que el archivo exista
-                    if($_FILES["pro-image"]["name"][$key]) {
-                        $filename = $_FILES["pro-image"]["name"][$key]; //Obtenemos el nombre original del archivo
-                        $source = $_FILES["pro-image"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
-                        
-                        $directorio = 'documentos/'.$nomDirectorio; //Declaramos un  variable con la ruta donde guardaremos los archivos
-                        
-                        //Validamos si la ruta de destino existe, en caso de no existir la creamos
-                        if(!file_exists($directorio)){
-                            mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");	
-                        }
-                        
-                        $dir=opendir($directorio); //Abrimos el directorio de destino
-                        $target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
-                        
-                        //Movemos y validamos que el archivo se haya cargado correctamente
-                        //El primer campo es el origen y el segundo el destino
-                        if(move_uploaded_file($source, $target_path)) {
-                            
-                            array_push($directorios, $target_path);	
-                            
-                            } else {	
-                            
-                        }
-                        closedir($dir); //Cerramos el directorio de destino
-                    }
-                }
-            }else{
-                $directorios[0] = $id_vehiculo = xss_clean(strtoupper($this->input->post('foto1')));
-                $directorios[1] = $id_vehiculo = xss_clean(strtoupper($this->input->post('foto2')));
-                $directorios[2] = $id_vehiculo = xss_clean(strtoupper($this->input->post('foto3')));
-                $directorios[3] = $id_vehiculo = xss_clean(strtoupper($this->input->post('foto4')));
-            }
+            
             $data = array(
                 'id_vehiculo' => $id_vehiculo,
                 'id_marca' => $id_marca,
@@ -249,11 +208,7 @@ class Vehiculo extends CI_Controller
                 'telefono_contacto' => $telefono,
                 'direccion_contacto' => $direccion,
                 'observaciones' => $observaciones,
-                'foto1' => $directorios[0],
-                'foto2' => $directorios[1],
-                'foto3' => $directorios[2],
-                'foto4' => $directorios[3],
-                'estado' => "Disponible"
+                'estado' => $estado
             );
         
             $this->form_validation->set_rules('marca', 'id_marca', 'trim|required|max_length[10]');

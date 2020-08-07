@@ -200,16 +200,28 @@
                             </div>
                         </div>
                       </div>
-                      <div class="row">
-                            <div class="col-md-12">
+
+                      <div class="row" >
+                            <div class="col-md-12" id="images">
                             
                                 <fieldset class="form-group">
-                                      <a class="btn btn-info" href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                                      <a class="btn btn-info" href="javascript:void(0)" onclick="$('#pro-image').click()">Subir Imagenes</a>
                                       <input type="file" id="pro-image" name="pro-image[]" style="display: none;" class="form-control" multiple>
                                   </fieldset>
                                   <div class="preview-images-zone">
                                       
                                   </div>
+                              </div>
+                              <div class="col-md-5" id="estados">
+                                <div class="form-group">
+                                  <label for="">Estado</label>
+                                  <select class="form-control select2 select2-info" name="estadoV" id="estadoV" 
+                                  data-dropdown-css-class="select2-info" style="width: 100%;" required> 
+                                  <option value="Disponible">Disponible</option>
+                                  <option value="Vendido">Vendido</option>
+                                  <option value="Proceso de Venta">Proceso de Venta</option>
+                                </select>
+                                </div>
                               </div>
                             </div>
                       
@@ -233,6 +245,8 @@
   <!-- /.content-wrapper -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  <script>
+
+
 
 
 $(document).ready(function() {
@@ -338,6 +352,27 @@ $(document).ready(function() {
     $('#li-vehiculo').removeClass('nav-link').addClass('nav-link active');
 
 
+    var estados = [
+      {
+        id: 0,
+        text: 'Vendido'
+    },
+    {
+        id: 1,
+        text: 'Disponible'
+    },
+    {
+        id: 2,
+        text: 'Proceso de Venta'
+    }
+    ]
+    
+    $("#estadoV").select2({
+          placeholder: "Seleccione estado vehiculo"
+          
+      });
+
+      $("#estados").hide()
 
     $("#marca").change(function(){
         $(this).valid(); 
@@ -387,7 +422,7 @@ $(document).ready(function() {
             "targets": 6,
             "data": null,
             "class": "project-actions text-center",
-            "defaultContent": "<button class='btn btn-warning btn-sm btn-edit'><i class='fas fa-eye'></i> </button>  &nbsp; <button class='btn btn-danger btn-sm btn-delete'><i class='fas fa-trash'></i> </button> &nbsp; "
+            "defaultContent": "<button class='btn btn-success btn-sm btn-edit'><i class='fas fa-pen'></i> </button>  &nbsp; <button class='btn btn-danger btn-sm btn-delete'><i class='fas fa-trash'></i> </button> &nbsp; "
         } ]
     });
 
@@ -438,6 +473,8 @@ $(document).ready(function() {
     $('#usuario_list tbody').on('click', '.btn-edit', function () {
         var data = table.row( $(this).parents('tr') ).data();
         console.log(data)
+        $("#images").hide()
+        $("#estados").show()
           $.ajax({ 
                 url: "vehiculo/getVehById/"+data['id_vehiculo'],
                 type: "GET",
@@ -520,10 +557,7 @@ $(document).ready(function() {
      
       VEHICULO = data['id_vehiculo'];
    
-      FOTO1 = data['foto1'];
-      FOTO2 = data['foto2'];
-      FOTO3 = data['foto3'];
-      FOTO4 = data['foto4'];
+      
       $('#precio').val(data['precio']);
       $('#año').val(data['año']);
       $('#nombreContacto').val(data['nombre_contacto']);
@@ -552,12 +586,24 @@ $(document).ready(function() {
                     data: data
                 }
             }); 
+
+      var cEstSelect = $('#estadoV');
+      var option = new Option(data['estado'], data['estado'], true, true);
+      cEstSelect.append(option).trigger('change');
+
+      cEstSelect.trigger({
+            type: 'select2:select',
+            params: {
+                data: data
+            }
+        });
             
     }
 
     $('#create-new').click(function () {
         
-         
+         $("#estados").hide()
+         $("#images").show()
          $('#btn-save').val("create");
          $('#usuarioForm').trigger("reset");
          $('#formModal').html("Agregar Nuevo Vehiculo");
@@ -619,10 +665,6 @@ $(document).ready(function() {
               var data = new FormData($("#usuarioForm")[0]);
               
               data.append('id_vehiculo', VEHICULO)
-              data.append('foto1', FOTO1)
-              data.append('foto2', FOTO2)
-              data.append('foto3', FOTO3)
-              data.append('foto4', FOTO4)
 
               //dataRequest = $('#usuarioForm').serialize() + '&id_Vehiculo=' + VEHICULO
             }
@@ -650,7 +692,7 @@ $(document).ready(function() {
                     $('#ajax-modal').modal('hide');
                     $('#btn-save').html('Guardar');
                     $('#btn-save').prop('disabled', false);
-
+                    location.reload();
                  }  else {
                     Swal.fire({
                       type: 'warning',

@@ -58,7 +58,8 @@ class Solicitudes extends CI_Controller
                     'telefono' => $telefono,
                     'correo' => $email,
                     'id_vehiculo' => $id_vehiculo,
-                    'comentarios' => $comentario  
+                    'comentarios' => $comentario,
+                    'estado' => "Pendiente"
                     );
             
                 $this->form_validation->set_rules('nombre', 'Nombre', 'trim|required|max_length[50]');

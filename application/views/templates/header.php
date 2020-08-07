@@ -213,7 +213,7 @@
           </li>
           <li class="nav-item">
               <a id="li-venta" href="<?php echo base_url();
-              ?>venta" class="nav-link">
+              ?>Venta" class="nav-link">
               <i class="nav-icon fas fa-cash-register"></i>
               <p>
                 Venta
