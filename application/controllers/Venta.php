@@ -12,6 +12,7 @@ class Venta extends CI_Controller
         }
         $this->CI =& get_instance();
         $this->username = $_SESSION['usuario'];
+        $this->rolUser = $_SESSION['rol'];
         $this->load->model('models');
         $this->load->helper('url_helper');
         $this->load->helper('date');
@@ -40,7 +41,7 @@ class Venta extends CI_Controller
     public function getAll()
     {
             $tableName = "asignacion";
-            $data = $this->models->getAsignaciones($tableName);
+            $data = $this->models->getAsignaciones($this->username, $this->rolUser);
             $arr = array('success' => false, 'data' => '');
             if ($data) {
                 $arr = array('data' => $data);

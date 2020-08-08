@@ -140,7 +140,7 @@ class models extends CI_Model
         return $query->row();
     }
 
-    public function getAsignaciones(){
+    public function getAsignaciones($user, $rol){
          $this->db->select("asignacion.*, solicitudes.*, usuarios.*, vehiculos.*, marcas.*, modelos.*, solicitudes.nombre as nombreC");
          $this->db->from("asignacion");
          $this->db->join("solicitudes", "solicitudes.id_solicitud = asignacion.id_solicitud", "inner");
@@ -148,6 +148,9 @@ class models extends CI_Model
          $this->db->join("vehiculos", "vehiculos.id_vehiculo = solicitudes.id_vehiculo", "inner");
          $this->db->join("marcas", "marcas.id_marca = vehiculos.id_marca", "inner");
          $this->db->join("modelos", "modelos.id_modelo = vehiculos.id_modelo", "inner");
+         if($rol == 2){
+         $this->db->where("usuarios.nombre", $user);
+         }
          $query=$this->db->get();
          return $query->result();
 
