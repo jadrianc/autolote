@@ -171,7 +171,7 @@
             "targets": 9,
             "data": null,
             "class": "project-actions text-center",
-            "defaultContent": " <button id='editarAsignacion' class='btn btn-success btn-sm btn-editar'><i class='far fa-edit'></i> </button> &nbsp; <button id='asignacionB' class='btn btn-warning btn-sm btn-edit'><i class='fas fa-user-check'></i> </button> &nbsp;  <button class='btn btn-info btn-sm btn-open'><i class='fas fa-eye'></i> </button> &nbsp; "
+            "defaultContent": " <button id='editarAsignacion' class='btn btn-success btn-sm btn-editar'><i class='far fa-edit'></i> </button> &nbsp; <button id='asignacionB' class='btn btn-warning btn-sm btn-edit'><i class='fas fa-user-check'></i> </button> &nbsp;  <button class='btn btn-info btn-sm btn-delete'><i class='fas fa-eye'></i> </button> &nbsp; "
         } ]
     });
 
@@ -196,10 +196,6 @@
                 editar.attr('disabled','disabled');
                }
 
-              // if(estado == "DESCARGADO"){
-              //   buttonRevertir.attr('disabled','disabled');
-              //   buttonReasinar.attr('disabled','disabled');
-              // }
               
              
               });
@@ -231,7 +227,7 @@
 
       $('#usuario_list tbody').on('click', '.btn-editar', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        //console.log(data)
+        console.log(data)
           $.ajax({ 
                 url: "asignaciones/getById/"+data['id_solicitud'],
                 type: "GET",
@@ -265,13 +261,15 @@
           });
     });
 
-
-
-     $('#usuario_list tbody').on('click', '.btn-open', function () {
-         var data = table.row( $(this).parents('tr') ).data();
-         console.log(data)
+   $('#usuario_list tbody').on('click', '.btn-edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        console.log(data)
           
-         
+        // $('#usuarioForm').trigger("reset");
+        // $('#formModal').html("Editar Usuario");
+       // $('#btn-save').val("update");
+       setForm(data);
+         $('#ajax-modal').modal('show');
                   
          
      });
@@ -328,12 +326,7 @@
      $("#nombre").html(data.nombre + " " + data.apellido)
      VEHICULO = data['id_vehiculo'];
      SOLICITUD = data['id_solicitud'];
-    //   $('#nombre').val(data['nombres']);
-    //   $('#apellido').val(data['apellidos']);
-    //   $('#dui').val(data['dui']);
-    //   $('#telefono').val(data['telefono']);
-    //   $('#direccion').val(data['direccion']);
-    //   $('#correo').val(data['correo']);
+   
               
     }
 

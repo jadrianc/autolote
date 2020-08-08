@@ -59,15 +59,16 @@ class Asignaciones extends CI_Controller
                 
 
                 $newRecord = array(
-                    'id_vehiculo' => $id_vehiculo,
-                    'id_usuario' => $id_usuario
+                    'id_solicitud' => $id_solicitud,
+                    'id_usuario' => $id_usuario,
+                    
                     );
                 $estado = array(
                     'id_solicitud' => $id_solicitud,
                     'estado' => "Asignado"
                 );
             
-                $this->form_validation->set_rules('id_vehiculo', 'id_vehiculo', 'trim|required|max_length[10]');
+                $this->form_validation->set_rules('id_solicitud', 'id_solicitud', 'trim|required|max_length[10]');
                 $this->form_validation->set_rules('vendedor', 'vendedor', 'trim|required|max_length[10]');
              
             

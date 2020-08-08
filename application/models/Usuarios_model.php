@@ -95,11 +95,4 @@ class Usuarios_model extends CI_Model
         $this->db->delete($this->tableName);
     }
 
-    public function getDataByOni($oni){
-        $this->db->select('UNIDAD');
-        $this->db->from("TTO_T_USUARIOS");
-        $this->db->where("CODPER", $oni);
-        $query = $this->db->get();  
-        return $query->row();
-    }
 }

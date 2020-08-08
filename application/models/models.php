@@ -140,5 +140,18 @@ class models extends CI_Model
         return $query->row();
     }
 
+    public function getAsignaciones(){
+         $this->db->select("asignacion.*, solicitudes.*, usuarios.*, vehiculos.*, marcas.*, modelos.*, solicitudes.nombre as nombreC");
+         $this->db->from("asignacion");
+         $this->db->join("solicitudes", "solicitudes.id_solicitud = asignacion.id_solicitud", "inner");
+         $this->db->join("usuarios", "usuarios.id_usuario = asignacion.id_usuario", "inner");
+         $this->db->join("vehiculos", "vehiculos.id_vehiculo = solicitudes.id_vehiculo", "inner");
+         $this->db->join("marcas", "marcas.id_marca = vehiculos.id_marca", "inner");
+         $this->db->join("modelos", "modelos.id_modelo = vehiculos.id_modelo", "inner");
+         $query=$this->db->get();
+         return $query->result();
+
+    }
+
 
 }

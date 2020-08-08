@@ -25,20 +25,19 @@
         <div class="card-header">
           <h3 class="card-title">Listado de Asignaciones</h3>
 
-          <div class="card-tools">
-              <a href="javascript:void(0)" class="btn btn-primary ml-3" id="create-new"><i class="fas fa-plus"></i> Agregar nuevo/a</a>
-          </div>
+          
         </div>
         <div class="card-body">
           <table id="usuario_list" class="table table-bordered table-hover table-sm" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
+                        <th>Nombre Cliente</th>
                         <th>Telefono</th>
-                        <th>DUI</th>
-                        <th>Direccion</th>
                         <th>Correo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Comentarios</th>
+                        <th>Estado Vehiculo</th>
                         
                         <th style="width: 20%">Opciones</th>
                     </tr>
@@ -59,65 +58,24 @@
                   </div>
                   <div class="modal-body">
                     <form id="usuarioForm" autocomplete="off" name="usuarioForm" class="form-horizontal">
-                      
                       <div class="row">
-                        <div class="col-sm-4">
-                          <!-- text input -->
+                        <div class="col-md-6">
                           <div class="form-group">
-                            <label>Nombre</label>
-                            <input type="text" class="form-control text-uppercase" placeholder="nombre de cliente"  
-                             id="nombre" name="nombre" required>
+                            <label for="">Estado Vehiculo</label>
+                            <select class="form-control select2 select2-info" name="estadoVehiculo" id="estadoVehiculo" 
+                                data-dropdown-css-class="select2-info" style="width: 100%;" required>
+                              
+                                <option value="Vendido">Vendido</option>
+                                <option value="Proceso de Venta">Proceso de Venta</option>
+                                <option value="Disponible">Disponible</option>
+                              </select>
                           </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Apellidos</label>
-                                <input type="text" class="form-control text-uppercase" placeholder="Apellidos Cliente"
-                                id="apellido" name="apellido" maxlength="90" required>
-                            </div>
-                         </div>
-                        <div class="col-sm-4">
-                            <!-- text input -->
-                            <div class="form-group">
-                              <label>Telefono</label>
-                                <div class="input-group mb-3">
-                                    <!-- /btn-group -->
-                                    <input type="text" class="form-control text-uppercase" id="telefono" 
-                                    name="telefono" placeholder="Telefono del cliente" required>
-                                    
-                                </div>
-                            </div>
-                        </div>
                       </div>
                       
-                      <div class="row" >
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Dui</label>
-                                <input type="text" class="form-control text-uppercase" id="dui" 
-                                    name="dui" placeholder="DUI" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Correo</label>
-                                <input type="email" class="form-control" id="correo" 
-                                    name="correo" placeholder="Correo del cliente" required>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Direccion</label>
-                                    <input type="text" class="form-control text-uppercase" id="direccion" 
-                                        name="direccion" placeholder="Direccion del cliente" required>
-                                </div>
-                            </div>
-                      </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="btn-save" value="create">Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" value="update">Guardar</button>
                   </div>
                 </form>
               </div>
@@ -137,6 +95,11 @@
   $(document).ready(function() {
     $('#li-venta').removeClass('nav-link').addClass('nav-link active');
    
+
+    $("#estadoVehiculo").select2({
+          placeholder: "Seleccione Estado Vehiculo"
+          
+      });
 
     let USER = '';
     var table = $('#usuario_list').DataTable({
@@ -161,24 +124,25 @@
               }
           },
         "ajax": {
-            "url": "clientes/getAll",
+            "url": "venta/getAll",
             "type": "GET",
             
         },
         "columns": [
-            { "data": "nombres" },
-            { "data": "apellidos" },
-            { "data": "dui" },
+            { "data": "nombreC" },
             { "data": "telefono" },
-            { "data": "direccion" },
-            { "data": "correo" }
+            { "data": "correo" },
+            { "data": "marca" },
+            { "data": "modelo" },
+            { "data": "comentarios" },
+            { "data": "estado" }
             
         ],
         "columnDefs": [ {
-            "targets": 6,
+            "targets": 7,
             "data": null,
             "class": "project-actions text-center",
-            "defaultContent": "<button class='btn btn-info btn-sm btn-edit'><i class='fas fa-pen'></i> </button> &nbsp; <button class='btn btn-danger btn-sm btn-delete'><i class='fas fa-trash'></i> </button> &nbsp; "
+            "defaultContent": "<button class='btn btn-info btn-sm btn-edit'><i class='fas fa-pen'></i> </button> &nbsp;  "
         } ]
     });
 
@@ -209,36 +173,8 @@
     $('#usuario_list tbody').on('click', '.btn-edit', function () {
         var data = table.row( $(this).parents('tr') ).data();
         console.log(data)
-          $.ajax({ 
-                url: "clientes/getById/"+data['id_cliente'],
-                type: "GET",
-                dataType: 'json',
-                success: function (res) {
-                  if(res.success){
-                    $('#usuarioForm').trigger("reset");
-                    $('#formModal').html("Editar Usuario");
-                    $('#btn-save').val("update");
-                    setForm(res.data);
-                    $('#ajax-modal').modal('show');
-                  } else {
-                    Swal.fire({
-                    type: 'warning',
-                    title: 'Error...',
-                    text: 'No se encontrol el recurso seleccionado',
-                    footer: ''
-                  })
-                  }
-                },
-                error: function (data) {
-                  Swal.fire({
-                    type: 'error',
-                    title: 'Error...',
-                    text: 'No se pudo completar su peticion!',
-                    footer: ''
-                  })
-                  console.log('Error:', data);
-                }
-          });
+         setForm(data)
+         $("#ajax-modal").modal('show')
     });
 
 
@@ -288,13 +224,18 @@
 
     function setForm(data){
      
-      USER = data['id_cliente'];
-      $('#nombre').val(data['nombres']);
-      $('#apellido').val(data['apellidos']);
-      $('#dui').val(data['dui']);
-      $('#telefono').val(data['telefono']);
-      $('#direccion').val(data['direccion']);
-      $('#correo').val(data['correo']);
+
+      VEHICULO = data['id_vehiculo']
+      var cEstSelect = $('#estadoVehiculo');
+            var option = new Option(data['estado'], data['estado'], true, true);
+            cEstSelect.append(option).trigger('change');
+
+            cEstSelect.trigger({
+                  type: 'select2:select',
+                  params: {
+                      data: data
+                  }
+              });
               
     }
 
@@ -356,8 +297,8 @@
               urlRequest = 'Clientes/store';
               dataRequest = $('#usuarioForm').serialize();
             } else if(actionType == 'update') {
-              urlRequest = 'clientes/update';
-              dataRequest = $('#usuarioForm').serialize() + '&id_cliente=' + USER
+              urlRequest = 'venta/update';
+              dataRequest = $('#usuarioForm').serialize() + '&id_vehiculo=' + VEHICULO
             }
 
             $('#btn-save').prop('disabled',true);
@@ -370,6 +311,7 @@
                dataType: 'json',
                success: function (res) {
                 if(res.status == true){
+                  location.reload();
                     Swal.fire({
                       type: 'success',
                       title: 'Exito',

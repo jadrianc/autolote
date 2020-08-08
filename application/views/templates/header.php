@@ -173,7 +173,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">MODULO</li>
-          <?php if(true){  ?>
+         
           <li class="nav-item">
               <a id="li-vehiculo" href="<?php echo base_url();
               ?>Vehiculo" class="nav-link">
@@ -192,7 +192,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
               <a id="li-permiso" href="<?php echo base_url();
               ?>Inspecciones" class="nav-link">
               <i class="nav-icon fas fa-search"></i>
@@ -200,23 +200,24 @@
                 Consultas
               </p>
             </a>
-          </li>
+          </li> -->
           
+          <li class="nav-item">
+            <a id="li-venta" href="<?php echo base_url();
+              ?>Venta" class="nav-link">
+              <i class="nav-icon fas fa-cash-register"></i>
+              <p>
+                Venta
+              </p>
+            </a>
+          </li>
+          <?php if($_SESSION['rol'] == 1){  ?>
           <li class="nav-item">
               <a id="li-asignaciones" href="<?php echo base_url();
               ?>asignaciones" class="nav-link">
               <i class="nav-icon fas fa-calendar-check"></i>
               <p>
                 Asignaciones
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-              <a id="li-venta" href="<?php echo base_url();
-              ?>Venta" class="nav-link">
-              <i class="nav-icon fas fa-cash-register"></i>
-              <p>
-                Venta
               </p>
             </a>
           </li>
@@ -230,10 +231,10 @@
             </a>
           </li>
           
-          <?php } ?> 
+       
 
           
-          <?php if(true){  ?>
+         
           
           
           <li class="nav-header">ADMINISTRACIÓN</li>

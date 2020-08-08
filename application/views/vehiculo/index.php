@@ -97,7 +97,9 @@
           <h3 class="card-title">Listado de <?php echo $title; ?></h3>
 
           <div class="card-tools">
+          <?php if($_SESSION['rol'] == 1){  ?>
               <a href="javascript:void(0)" class="btn btn-primary ml-3" id="create-new"><i class="fas fa-plus"></i> Agregar nuevo/a</a>
+              <?php } ?>
           </div>
         </div>
         <div class="card-body">
@@ -418,12 +420,16 @@ $(document).ready(function() {
             { "data": "estado" }
             
         ],
+        <?php if($_SESSION['rol'] == 1){  ?>
         "columnDefs": [ {
             "targets": 6,
             "data": null,
             "class": "project-actions text-center",
+            
             "defaultContent": "<button class='btn btn-success btn-sm btn-edit'><i class='fas fa-pen'></i> </button>  &nbsp; <button class='btn btn-danger btn-sm btn-delete'><i class='fas fa-trash'></i> </button> &nbsp; "
+            
         } ]
+        <?php } ?>
     });
 
 
