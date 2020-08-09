@@ -151,10 +151,10 @@ class Vehiculo extends CI_Controller
                     'telefono_contacto' => $telefono,
                     'direccion_contacto' => $direccion,
                     'observaciones' => $observaciones,
-                    'foto1' => $directorios[0],
-                    'foto2' => $directorios[1],
-                    'foto3' => $directorios[2],
-                    'foto4' => $directorios[3],
+                    'foto1' => empty($directorios[0]) ? "" : $directorios[0],
+                    'foto2' => empty($directorios[1]) ? "" : $directorios[1],
+                    'foto3' => empty($directorios[2]) ? ""  : $directorios[2],
+                    'foto4' => empty($directorios[3]) ? "" : $directorios[3],
                     'estado' => "Disponible"
                 );
             
