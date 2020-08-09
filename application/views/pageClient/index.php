@@ -154,6 +154,17 @@
             </div>
           </div>
         </form> -->
+        <select class="form-control select2 select2-info" name="rango" id="rango" 
+        data-dropdown-css-class="select2-info" style="width: 100%;" required> 
+            <option value="">Rango de precios</option>
+            <option value="1">$2000 - $4000</option>
+            <option value="2">$4000 - $6000</option>
+            <option value="3">$6000 - $8000</option>
+            <option value="4">$8000 - $10000</option>
+            <option value="5">$10000 - $14000</option>
+            <option value="6">$14000 - </option>
+            
+        </select>
       </div>
 
       <!-- Right navbar links -->
@@ -453,6 +464,8 @@
 <script src="<?php echo base_url();?>theme/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 <script>
     $(document).ready(function() {
+
+      
           
         $.ajax({ 
                 url: "vehiculo/getAllVehiculos/",
@@ -539,12 +552,118 @@
                         $("#id_vehiculo").val(object.id_vehiculo)
                       })
                    })
+
+                   $("#rango").change(function(){
+                      contenido.innerHTML = ""
+                      if($(this).val() == 1){
+                        let dt = res.data.filter(element => element.precio > 2000 && element.precio < 4000)
+                        recorrer(dt)
+                      }else if($(this).val() == 2){
+                        let dt = res.data.filter(element => element.precio > 4000 && element.precio < 6000)
+                        recorrer(dt)
+                      }else if($(this).val() == 3){
+                        let dt = res.data.filter(element => element.precio > 6000 && element.precio < 8000)
+                        recorrer(dt)
+                      }else if($(this).val() == 4){
+                        let dt = res.data.filter(element => element.precio > 8000 && element.precio < 10000)
+                        recorrer(dt)
+                      }else if($(this).val() == 5){
+                        let dt = res.data.filter(element => element.precio > 10000 && element.precio < 14000)
+                        recorrer(dt)
+                      }else if($(this).val() == 6){
+                        let dt = res.data.filter(element => element.precio > 14000)
+                        recorrer(dt)
+                      }
+
+                    })
                   
                 },
                 error: function (data) {
                   
                 }
           });
+
+          function recorrer(data){
+            let contenido = document.getElementById("cars");
+            data.forEach(element => {
+              
+                        var data_str = encodeURIComponent(JSON.stringify(element));    
+                        var datastr = encodeURIComponent(JSON.stringify(element));
+                        contenido.innerHTML += `
+                    
+                                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                              <div class="card bg-light">
+                                <div class="card-header text-muted border-bottom-0">
+                                  <b>${element.marcaV}</b> 
+                                </div>
+                                <div class="card-body pt-0">
+                                  <div class="row">
+                                    <div class="col-7">
+                                      <h2 class="lead"><b>${element.modeloV}</b></h2>
+                                      <p class="text-muted text-sm"><b>Precio: $</b>${element.precio} </p>
+                                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="small"><span class="fa-li"></span> Año: ${element.año}</li>
+                                        
+                                      </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                      <img src="${element.foto3}" alt="" class="img img-fluid">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card-footer">
+                                  <div class="text-right" id="botones">
+                                    <a data-toggle="modal" class="btn btn-sm bg-teal contactar ${element.id_vehiculo}" data-target="${datastr}" id="contactar">
+                                      <i class="fas fa-comments"> Contactar</i>
+                                    </a>
+                                    <a  class="btn btn-sm btn-primary detalles" data-toggle="modal" data-target="${data_str}" id="${element.id_vehiculo}" >
+                                      <i class="fas fa-plus"></i> Detalles
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                                    `;
+
+                    
+                    
+                })
+
+                data.forEach(dt => {
+                    let ids = "#" + dt.id_vehiculo
+                    let my_object
+                        $(ids).click(function(){
+                           // console.log(this)
+                           // console.log($(this).data("target"))
+                             my_object = JSON.parse(decodeURIComponent($(this).data("target")));
+                            console.log(my_object)
+                            $("#modalDetalles").modal('show')
+                            $("#marca").html(my_object.marcaV)
+                            $("#modelo").html(my_object.modeloV)
+                            $("#img1").attr("src", my_object.foto1)
+                            $("#img2").attr("src", my_object.foto2)
+                            $("#img3").attr("src", my_object.foto3)
+                            $("#img4").attr("src", my_object.foto4)
+                            $("#imge1").attr("href", my_object.foto1)
+                            $("#imge2").attr("href", my_object.foto2)
+                            $("#imge3").attr("href", my_object.foto3)
+                            $("#imge4").attr("href", my_object.foto4)
+                            $("#precio").html("$"+my_object.precio)
+                            $("#observaciones").html(my_object.observaciones)
+                            
+                        })
+
+                      let idsC = "." + dt.id_vehiculo
+                      $(idsC).click(function(){
+                        let object = JSON.parse(decodeURIComponent($(this).data("target")));
+                        console.log(object)
+                        $("#ajax-modal").modal('show')
+                        $("#marcaC").html(object.marcaV)
+                        $("#modeloC").html(object.modeloV)
+                        $("#id_vehiculo").val(object.id_vehiculo)
+                      })
+                   })
+          }
 
           
 
