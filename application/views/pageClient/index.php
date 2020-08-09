@@ -468,7 +468,7 @@
       
           
         $.ajax({ 
-                url: "vehiculo/getAllVehiculos/",
+                url: "vehiculo/getAllVehiculosCliente/",
                 type: "POST",
                 dataType: 'json',
                 success: function (res) {

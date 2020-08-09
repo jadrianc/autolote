@@ -69,6 +69,18 @@ class Vehiculo extends CI_Controller
         
     }
 
+    public function getAllVehiculosCliente()
+    {
+           
+            $data = $this->models->getAllVehiculosCliente($this->tableName);
+            $arr = array('success' => false, 'data' => '');
+            if ($data) {
+                $arr = array('data' => $data);
+            }
+            echo json_encode($arr);
+        
+    }
+
     public function getById($id)
     {
         
